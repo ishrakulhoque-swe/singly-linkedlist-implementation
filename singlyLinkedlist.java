@@ -1,27 +1,26 @@
 import java.util.*;
 
-
-class Node <E>{
-
-    E data;
+class Node {
     Node next;
+    int data;
 
-    public Node(E data){
+    public Node(int data) {
         this.data = data;
+        this.next = null;
     }
 }
 
+public class Main {
 
-public class Tester {
+    public static void main(String[] args) {
 
-    static void main() {
-
-        Node<Integer> n1 = new Node<>(12);
-        Node<Integer> n2 = new Node<>(13);
-        Node<Integer> n3 = new Node<>(14);
-        Node<Integer> n4 = new Node<>(15);
-        Node<Integer> n5 = new Node<>(16);
-        Node<Integer> n6 = new Node<>(17);
+        Node n1 = new Node(11);
+        Node n2 = new Node(12);
+        Node n3 = new Node(13);
+        Node n4 = new Node(14);
+        Node n5 = new Node(15);
+        Node n6 = new Node(16);
+        Node n7 = new Node(17);
 
         Node head = n1;
         head.next = n2;
@@ -29,78 +28,79 @@ public class Tester {
         n3.next = n4;
         n4.next = n5;
         n5.next = n6;
-        n6.next = null;
-        // Travelling a linked list
-        System.out.println("Travelling linkedlist : ");
+        n6.next = n7;
+
+        System.out.println("Travelling linked list:");
         traverse(head);
 
-        System.out.println();
-
-        // Inserting element in linked list
-        System.out.println("Inserting element in a linkedlist :");
-
-        System.out.println("Enter an element to add in the linkedlist : ");
         Scanner sc = new Scanner(System.in);
-        int data = sc.nextInt();
-        System.out.println("Enter the postion to add ");
+
+        // INSERTION
+        System.out.println("\nEnter a number to insert:");
+        int element = sc.nextInt();
+
+        System.out.println("Enter the position to insert:");
         int pos = sc.nextInt();
-        insert(data,head,pos);
-        System.out.println("Successfully inserted "+data+" at postion "+pos);
-        System.out.println("Updated linkedlist ");
+
+        head = addition(head, element, pos);
+
+        System.out.println("After insertion:");
         traverse(head);
 
-        // Deleting element from a linkedlist
-        System.out.println();
-        System.out.println("Deleting element from a linkedlist ");
-        System.out.println("Enter a position to remove");
+        // DELETION
+        System.out.println("\nEnter the position to delete:");
         int p = sc.nextInt();
-        delete(p,head);
-        System.out.println("Deletion successful");
-        System.out.println("Updated linked list");
+
+        head = deletion(head, p);
+
+        System.out.println("After deletion:");
         traverse(head);
-
-
-
     }
 
-    public static void traverse(Node head){
+    // Traverse
+    public static void traverse(Node head) {
         Node curr = head;
-        while(curr != null){
+        while (curr != null) {
             System.out.println(curr.data);
             curr = curr.next;
         }
     }
 
-    public static <E> void  insert(E data,Node head, int pos ){
-        Node toAdd = new Node<>(data);
+    // Insert
+    public static Node addition(Node head, int data, int pos) {
 
-        if(pos==0){
+        Node toAdd = new Node(data);
+
+        if (pos == 0) {
             toAdd.next = head;
-            head = toAdd;
-            return;
+            return toAdd;
         }
 
         Node prev = head;
-
-        for(int i=0;i<pos -1;i++){
+        for (int i = 0; i < pos - 1; i++) {
             prev = prev.next;
         }
-
 
         toAdd.next = prev.next;
         prev.next = toAdd;
 
+        return head;
     }
 
-    public static  void delete(int pos,Node head){
-        if(pos==0){
-            head= head.next;
-            return;
+    // Delete
+    public static Node deletion(Node head, int pos) {
+
+        if (pos == 0) {
+            return head.next;
         }
+
         Node prev = head;
-        for(int i =0;i<pos-1;i++){
+        for (int i = 0; i < pos - 1; i++) {
             prev = prev.next;
         }
+
         prev.next = prev.next.next;
+
+        return head;
     }
 }
